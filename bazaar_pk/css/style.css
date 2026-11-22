@@ -1,0 +1,951 @@
+/* ============================================================
+   style.css — Bazaar.pk
+   Complete stylesheet for all pages
+   Dark theme: #0f1117 background + #2DD4BF teal accent
+   ============================================================ */
+
+/* ===== CSS VARIABLES (brand colors & tokens) =====
+   Define once here, use everywhere with var(--name)
+   Change a color here and it updates across the whole site */
+:root {
+  --bg:        #0f1117;           /* main dark background */
+  --bg2:       #1a1f2e;           /* slightly lighter dark (cards, left panel) */
+  --bg3:       #232938;           /* even lighter dark (hover states) */
+  --teal:      #2DD4BF;           /* primary brand teal */
+  --teal2:     #5EEAD4;           /* lighter teal (hover on buttons) */
+  --teal-dim:  rgba(45,212,191,0.12);  /* teal with low opacity (backgrounds) */
+  --txt:       #F1F5F9;           /* primary white text */
+  --txt2:      #94A3B8;           /* secondary muted text */
+  --txt3:      #64748B;           /* tertiary hint text */
+  --border:    rgba(255,255,255,0.07);  /* subtle white border */
+  --border2:   rgba(45,212,191,0.25);  /* teal-tinted border (active/focus) */
+  --danger:    #f87171;           /* red for error messages */
+  --danger-bg: rgba(248,113,113,0.10);
+  --danger-br: rgba(248,113,113,0.25);
+}
+
+/* ===== GLOBAL RESET & BASE =====
+   Removes default browser margins/padding
+   Sets base font and background for every page */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;   /* smooth scrolling when clicking anchor links */
+}
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;  /* makes text look sharper */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.15s;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ============================================================
+   NAVBAR — used on index.php (landing page)
+   ============================================================ */
+
+.bz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 40px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;      /* stays at top as you scroll */
+  top: 0;
+  z-index: 100;          /* sits above all other content */
+}
+
+.bz-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Bazaar.pk logo text */
+.bz-logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: -0.5px;
+}
+.bz-logo span {
+  color: var(--teal2);   /* .pk part slightly lighter */
+}
+
+/* "Browse store" — the most prominent nav item */
+.bz-browse-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--teal);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 14px;
+  background: var(--teal-dim);
+  transition: background 0.2s;
+}
+.bz-browse-btn:hover {
+  background: rgba(45,212,191,0.22);
+  color: var(--teal);
+}
+
+/* Secondary nav links (Categories, Deals, Sell) */
+.bz-nav-links {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.bz-nav-links a {
+  font-size: 13px;
+  color: var(--txt2);
+  transition: color 0.15s;
+}
+.bz-nav-links a:hover {
+  color: var(--txt);
+}
+
+/* Right side buttons (Login + Sign up) */
+.bz-nav-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Login button — outlined teal */
+.bz-btn-outline {
+  display: inline-block;
+  font-size: 12px;
+  padding: 7px 18px;
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  color: var(--teal);
+  background: transparent;
+  transition: background 0.15s;
+}
+.bz-btn-outline:hover {
+  background: var(--teal-dim);
+  color: var(--teal);
+}
+
+/* Sign up button — solid teal fill */
+.bz-btn-fill {
+  display: inline-block;
+  font-size: 12px;
+  padding: 7px 18px;
+  border-radius: 5px;
+  background: var(--teal);
+  color: #0f1117;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.bz-btn-fill:hover {
+  background: var(--teal2);
+  color: #0f1117;
+}
+
+/* ============================================================
+   HERO SECTION — index.php
+   ============================================================ */
+
+.bz-hero {
+  padding: 72px 40px 56px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Small pill label above the title */
+.hero-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--teal-dim);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 5px 16px;
+  margin-bottom: 22px;
+}
+
+/* Main hero headline */
+.hero-title {
+  font-size: 44px;
+  font-weight: 600;
+  color: var(--txt);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.hero-title span {
+  color: var(--teal);   /* "Sell anything." is teal */
+}
+
+/* Hero subtext */
+.hero-sub {
+  font-size: 15px;
+  color: var(--txt2);
+  margin-bottom: 32px;
+  line-height: 1.7;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Three CTA buttons row */
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+/* "Start shopping" — solid teal */
+.hbtn-primary {
+  display: inline-block;
+  font-size: 14px;
+  padding: 12px 28px;
+  border-radius: 6px;
+  background: var(--teal);
+  color: #0f1117;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.hbtn-primary:hover {
+  background: var(--teal2);
+  color: #0f1117;
+}
+
+/* "Become a vendor" — teal outline */
+.hbtn-outline {
+  display: inline-block;
+  font-size: 14px;
+  padding: 12px 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  color: var(--teal);
+  background: transparent;
+  transition: all 0.15s;
+}
+.hbtn-outline:hover {
+  background: var(--teal-dim);
+  color: var(--teal);
+}
+
+/* "Browse as guest" — dark ghost */
+.hbtn-ghost {
+  display: inline-block;
+  font-size: 14px;
+  padding: 12px 28px;
+  border-radius: 6px;
+  background: var(--bg2);
+  color: var(--txt);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+.hbtn-ghost:hover {
+  border-color: var(--border2);
+  color: var(--teal);
+}
+
+/* Small note line below buttons */
+.hero-note {
+  font-size: 12px;
+  color: var(--txt3);
+  margin-bottom: 40px;
+}
+
+/* Stats row at bottom of hero */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.hstat {
+  text-align: center;
+}
+.hstat-num {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--teal);
+}
+.hstat-lbl {
+  font-size: 12px;
+  color: var(--txt3);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   SHARED SECTION LABELS — used in features, how-it-works etc
+   ============================================================ */
+
+.sec-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--teal);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.sec-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--txt);
+  text-align: center;
+  margin-bottom: 8px;
+}
+.sec-sub {
+  font-size: 14px;
+  color: var(--txt2);
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+/* ============================================================
+   FEATURES SECTION — index.php
+   ============================================================ */
+
+.bz-features {
+  padding: 60px 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* 4-column grid for feature cards */
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.feat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 18px;
+  transition: border-color 0.15s;
+}
+.feat-card:hover {
+  border-color: var(--border2);
+}
+
+.feat-icon {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+.feat-card-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--txt);
+  margin-bottom: 6px;
+}
+.feat-card-desc {
+  font-size: 12px;
+  color: var(--txt2);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   HOW IT WORKS SECTION — index.php
+   ============================================================ */
+
+.bz-how {
+  padding: 60px 40px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+/* Step items + connectors laid out in a row */
+.how-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  margin-top: 36px;
+}
+
+.how-step {
+  flex: 1;
+  max-width: 220px;
+}
+
+/* Numbered circle */
+.how-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #0f1117;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.how-step-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--txt);
+  margin-bottom: 6px;
+}
+.how-step-desc {
+  font-size: 12px;
+  color: var(--txt2);
+  line-height: 1.6;
+}
+
+/* Horizontal line connecting the steps */
+.how-connector {
+  flex: 0 0 60px;
+  height: 1px;
+  background: var(--border2);
+  margin-top: 20px;   /* aligns with center of numbered circle */
+}
+
+/* ============================================================
+   VENDOR CTA SECTION — index.php
+   ============================================================ */
+
+.bz-vcta {
+  padding: 60px 40px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.vcta-box {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 44px 32px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.vcta-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--txt);
+  margin-bottom: 10px;
+}
+.vcta-sub {
+  font-size: 13px;
+  color: var(--txt2);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+.vcta-btn {
+  display: inline-block;
+  font-size: 14px;
+  padding: 12px 30px;
+  border-radius: 6px;
+  background: var(--teal);
+  color: #0f1117;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.vcta-btn:hover {
+  background: var(--teal2);
+  color: #0f1117;
+}
+
+/* ============================================================
+   FOOTER — index.php
+   ============================================================ */
+
+.bz-footer {
+  background: #090c12;    /* even darker than --bg */
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+}
+.footer-logo {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--teal);
+}
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+.footer-links a {
+  font-size: 12px;
+  color: var(--txt3);
+  transition: color 0.15s;
+}
+.footer-links a:hover {
+  color: var(--txt2);
+}
+.footer-copy {
+  font-size: 12px;
+  color: var(--txt3);
+}
+
+/* ============================================================
+   AUTH PAGES — signup.php & login.php
+   Split layout: dark left panel + form on right
+   ============================================================ */
+
+.auth-outer {
+  min-height: 100vh;    /* fills full screen height */
+  display: flex;
+}
+
+/* ── Left brand panel ── */
+.auth-left {
+  width: 42%;
+  background: var(--bg2);
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+}
+
+/* Side-by-side small buttons at top of left panel */
+.auth-top-btns {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* "Back to home" — subtle ghost button */
+.btn-back {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--txt2);
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.btn-back svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.btn-back:hover {
+  border-color: var(--border2);
+  color: var(--teal);
+}
+
+/* "Browse as guest" — teal tinted button */
+.btn-guest {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--teal);
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: var(--teal-dim);
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.btn-guest svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.btn-guest:hover {
+  background: rgba(45,212,191,0.22);
+}
+
+/* Thin line separating buttons from brand content */
+.auth-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 16px;
+}
+
+/* Brand logo on auth pages */
+.auth-logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: 6px;
+}
+
+/* Tagline paragraph — tight margin so points follow immediately */
+.auth-tagline {
+  font-size: 12px;
+  color: var(--txt2);
+  margin-bottom: 14px;   /* small gap — points come right after */
+  line-height: 1.65;
+}
+
+/* Bullet point list — NO margin-top:auto so no gap above */
+.auth-feats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Single bullet point row */
+.alf {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+/* Teal dot */
+.alf-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+  margin-top: 5px;   /* vertically aligns dot with first line of text */
+}
+
+.alf-txt {
+  font-size: 11px;
+  color: var(--txt2);
+  line-height: 1.5;
+}
+
+/* ── Right form panel ── */
+.auth-right {
+  flex: 1;
+  padding: 40px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* vertically centers the form */
+  background: var(--bg);
+}
+
+.form-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--txt);
+  margin-bottom: 4px;
+}
+
+.form-sub {
+  font-size: 12px;
+  color: var(--txt2);
+  margin-bottom: 22px;
+}
+.form-sub a {
+  color: var(--teal);
+  font-weight: 500;
+  text-decoration: none;
+}
+.form-sub a:hover {
+  color: var(--teal2);
+}
+
+/* ── Individual form field group ── */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--txt2);
+  margin-bottom: 5px;
+  letter-spacing: 0.3px;
+}
+
+/* Text / email / password input fields */
+.form-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--txt);
+  background: var(--bg2);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.form-input::placeholder {
+  color: var(--txt3);
+}
+.form-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-dim);
+}
+
+/* Wrapper for password field + eye icon */
+.form-input-wrap {
+  position: relative;
+}
+
+/* Eye icon for show/hide password */
+.form-eye {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--txt3);
+  transition: color 0.15s;
+}
+.form-eye:hover {
+  color: var(--teal);
+}
+.form-eye svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* ── Role toggle (signup page only) ── */
+.role-toggle {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.role-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--txt2);
+  background: var(--bg2);
+  text-align: center;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.role-btn:hover {
+  border-color: var(--border2);
+  color: var(--teal);
+}
+.role-btn.selected {
+  border: 1.5px solid var(--teal);
+  color: var(--teal);
+  background: var(--teal-dim);
+  font-weight: 500;
+}
+
+/* Emoji icon inside role buttons */
+.role-icon {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ── Forgot password link row ── */
+.forgot-link {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+.forgot-link a {
+  font-size: 11px;
+  color: var(--teal);
+  text-decoration: none;
+}
+.forgot-link a:hover {
+  color: var(--teal2);
+}
+
+/* ── Main submit button ── */
+.form-submit {
+  width: 100%;
+  padding: 11px;
+  border-radius: 6px;
+  background: var(--teal);
+  color: #0f1117;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.form-submit:hover {
+  background: var(--teal2);
+}
+
+/* ── Switch page link (Login here / Sign up free) ── */
+.form-switch {
+  text-align: center;
+  font-size: 12px;
+  color: var(--txt2);
+  margin-top: 14px;
+}
+.form-switch a {
+  color: var(--teal);
+  font-weight: 500;
+  text-decoration: none;
+}
+.form-switch a:hover {
+  color: var(--teal2);
+}
+
+/* ── Error message box (wrong password, empty fields etc) ── */
+.err-msg {
+  font-size: 12px;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-br);
+  border-radius: 6px;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+  display: none;   /* hidden by default, shown by PHP or JS */
+}
+
+/* ── Success message box (account created etc) ── */
+.ok-msg {
+  font-size: 12px;
+  color: var(--teal);
+  background: var(--teal-dim);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 9px 12px;
+  margin-top: 10px;
+  display: none;   /* hidden by default */
+}
+
+/* ============================================================
+   RESPONSIVE — basic mobile adjustments
+   Bootstrap handles most of this, these are our custom fixes
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+  /* Navbar stacks on small screens */
+  .bz-nav {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 20px;
+  }
+  .bz-nav-links {
+    display: none;   /* hide middle links on mobile */
+  }
+
+  /* Hero adjusts font size */
+  .hero-title {
+    font-size: 28px;
+  }
+  .bz-hero {
+    padding: 40px 20px 36px;
+  }
+
+  /* Stats row wraps on small screens */
+  .hero-stats {
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  /* Features go to 2 columns on tablet */
+  .feat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* How it works stacks vertically */
+  .how-steps {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .how-connector {
+    display: none;
+  }
+
+  /* Auth pages stack on mobile */
+  .auth-outer {
+    flex-direction: column;
+  }
+  .auth-left {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 24px 20px;
+  }
+  .auth-right {
+    padding: 28px 20px;
+  }
+
+  /* Footer stacks */
+  .bz-footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .bz-features,
+  .bz-how,
+  .bz-vcta {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Single column features on phone */
+  .feat-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-title {
+    font-size: 24px;
+  }
+  .hero-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+}

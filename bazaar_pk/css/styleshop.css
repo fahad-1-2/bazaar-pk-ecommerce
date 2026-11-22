@@ -1,0 +1,855 @@
+/* ============================================================
+   styleshop.css — Bazaar.pk Shop Page
+   Separate stylesheet just for shop.php
+   Imports on top of the base style.css variables
+   ============================================================ */
+
+/* ── Extra shop-specific variables ──
+   These add onto the :root already defined in style.css */
+:root {
+  --red:        #f87171;
+  --amber:      #fbbf24;
+  --green:      #4ade80;
+  --red-dim:    rgba(248,113,113,0.10);
+  --amber-dim:  rgba(251,191,36,0.10);
+}
+
+/* ============================================================
+   SHOP NAVBAR
+   Different from landing page navbar — has hamburger,
+   search bar, deliver-to, cart, and ghost login button
+   ============================================================ */
+
+.shop-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Three-line hamburger button */
+.nav-hamburger {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  background: transparent;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+.nav-hamburger:hover { border-color: var(--border2); }
+
+/* Each line of the hamburger icon */
+.hline {
+  width: 16px;
+  height: 1.5px;
+  background: var(--txt2);
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+.nav-hamburger:hover .hline { background: var(--teal); }
+
+/* Logo */
+.shop-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.shop-logo span { color: var(--teal2); }
+
+/* ── Search bar ──
+   Has its own category dropdown inside it */
+.nav-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+  max-width: 560px;
+}
+.nav-search:focus-within { border-color: var(--teal); }
+
+/* Category dropdown inside search */
+.search-cat {
+  font-size: 11px;
+  color: var(--txt2);
+  padding: 0 10px;
+  border-right: 1px solid var(--border);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background: var(--bg3);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.search-cat:hover { color: var(--txt); }
+.search-cat svg {
+  width: 10px; height: 10px;
+  stroke: var(--txt3); fill: none; stroke-width: 2;
+}
+
+/* Text input inside search */
+.search-inp {
+  flex: 1;
+  height: 36px;
+  padding: 0 12px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: var(--txt);
+  font-family: inherit;
+}
+.search-inp::placeholder { color: var(--txt3); }
+
+/* Search submit button */
+.search-btn {
+  width: 42px;
+  height: 36px;
+  background: var(--teal);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.search-btn:hover { background: var(--teal2); }
+.search-btn svg {
+  width: 15px; height: 15px;
+  stroke: #0f1117; fill: none;
+  stroke-width: 2.5; stroke-linecap: round;
+}
+
+/* Right side of navbar */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Deliver to — flag + city */
+.nav-deliver {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--txt2);
+  cursor: pointer;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: border-color 0.15s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav-deliver:hover { border-color: var(--border2); color: var(--txt); }
+.flag { font-size: 14px; }
+.deliver-lbl {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.deliver-top  { font-size: 9px;  color: var(--txt3); }
+.deliver-city { font-size: 11px; color: var(--txt); font-weight: 500; }
+.nav-deliver svg {
+  width: 10px; height: 10px;
+  stroke: var(--txt3); fill: none; stroke-width: 2;
+}
+
+/* Cart button */
+.nav-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  background: transparent;
+  text-decoration: none;
+}
+.nav-cart:hover { border-color: var(--border2); }
+.nav-cart svg {
+  width: 18px; height: 18px;
+  stroke: var(--txt); fill: none;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.cart-lbl  { font-size: 12px; color: var(--txt); font-weight: 500; }
+
+/* Cart count badge */
+.cart-count {
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 17px; height: 17px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #0f1117;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s;
+}
+
+/* Ghost login button — non-prominent for guests */
+.nav-login-ghost {
+  font-size: 11px;
+  color: var(--txt3);
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  text-decoration: none;
+  font-family: inherit;
+}
+.nav-login-ghost:hover { color: var(--teal); border-color: var(--border2); }
+
+/* Logout button — shown when logged in */
+.nav-logout-ghost {
+  font-size: 11px;
+  color: var(--txt3);
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  text-decoration: none;
+  font-family: inherit;
+}
+.nav-logout-ghost:hover {
+  color: var(--red);
+  border-color: rgba(248,113,113,0.3);
+}
+
+/* ============================================================
+   CATEGORY BAR
+   Horizontally scrollable row of category pills under navbar
+   ============================================================ */
+
+.cat-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+/* The scrollable inner container */
+.cat-scroll {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow-x: auto;
+  flex: 1;
+  scrollbar-width: none;       /* Firefox — hides scrollbar */
+}
+.cat-scroll::-webkit-scrollbar { display: none; }  /* Chrome — hides scrollbar */
+
+/* Single category tab */
+.cat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--txt2);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.cat-item:hover { color: var(--txt); border-bottom-color: var(--border2); }
+.cat-item.active {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
+  font-weight: 500;
+}
+.cat-icon { font-size: 14px; }
+
+/* More button at end of category bar */
+.cat-more {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--txt2);
+  cursor: pointer;
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.cat-more:hover { color: var(--teal); }
+.cat-more svg {
+  width: 12px; height: 12px;
+  stroke: currentColor; fill: none; stroke-width: 2;
+}
+
+/* ============================================================
+   HERO BANNER SECTION
+   Main promo banner + 2 smaller side banners
+   ============================================================ */
+
+.hero-banner {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+/* Large left banner */
+.banner-main {
+  flex: 2;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 140px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.banner-main:hover { border-color: var(--teal); }
+
+/* Small pill label on banner */
+.banner-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--teal-dim);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.banner-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--txt);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+.banner-sub  { font-size: 12px; color: var(--txt2); margin-bottom: 14px; }
+.banner-btn {
+  font-size: 12px;
+  padding: 8px 18px;
+  background: var(--teal);
+  color: #0f1117;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.banner-btn:hover { background: var(--teal2); }
+.banner-visual { font-size: 56px; opacity: 0.85; }
+
+/* Right side — two smaller banners stacked */
+.banner-side { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.banner-small {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.banner-small:hover { border-color: var(--border2); }
+.bs-tag   { font-size: 9px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
+.bs-title { font-size: 13px; font-weight: 600; color: var(--txt); margin-bottom: 3px; }
+.bs-sub   { font-size: 11px; color: var(--txt2); }
+
+/* ============================================================
+   FILTER BAR — single line, everything in one row
+   ============================================================ */
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  overflow-x: auto;          /* scrolls horizontally on small screens */
+  scrollbar-width: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-label {
+  font-size: 11px;
+  color: var(--txt3);
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+/* Quick filter chips */
+.filter-chip {
+  font-size: 11px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--txt2);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: inherit;
+}
+.filter-chip:hover { border-color: var(--border2); color: var(--teal); }
+.filter-chip.active {
+  background: var(--teal-dim);
+  color: var(--teal);
+  border-color: var(--border2);
+}
+
+/* Thin vertical separator */
+.filter-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* Sort dropdown */
+.sort-select {
+  font-size: 11px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--txt2);
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  height: 28px;
+  font-family: inherit;
+}
+.sort-select:focus { border-color: var(--teal); }
+
+/* Result count text */
+.result-count {
+  font-size: 11px;
+  color: var(--txt3);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;    /* pushes to the right */
+}
+
+/* Grid / List view toggle */
+.view-toggle { display: flex; gap: 4px; flex-shrink: 0; }
+.vt-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.15s;
+}
+.vt-btn:hover  { border-color: var(--border2); }
+.vt-btn.active { border-color: var(--border2); background: var(--teal-dim); }
+.vt-btn svg {
+  width: 13px; height: 13px;
+  stroke: var(--txt2); fill: none; stroke-width: 1.5;
+}
+.vt-btn.active svg { stroke: var(--teal); }
+
+/* ============================================================
+   PRODUCTS AREA — full width, no sidebar
+   ============================================================ */
+
+.products-area { padding: 16px 20px; }
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.section-title { font-size: 15px; font-weight: 700; color: var(--txt); }
+.section-title span { color: var(--teal); }
+.section-see  { font-size: 11px; color: var(--teal); cursor: pointer; }
+.section-see:hover { color: var(--teal2); }
+
+/* Auto-fill grid — adapts to any screen width */
+.prod-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 14px;
+}
+
+/* ── Product card ── */
+.prod-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+  position: relative;
+}
+.prod-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+}
+
+/* Product image area — shows emoji placeholder */
+.prod-img {
+  width: 100%;
+  height: 148px;
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+/* SALE / NEW / HOT badge */
+.prod-badge {
+  position: absolute;
+  top: 8px; left: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+.badge-sale { background: var(--red);   color: #fff;    }
+.badge-new  { background: var(--teal);  color: #0f1117; }
+.badge-hot  { background: var(--amber); color: #0f1117; }
+
+/* Wishlist heart button on product card */
+.prod-wish {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: rgba(15,17,23,0.7);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.prod-wish:hover {
+  border-color: var(--red);
+  background: rgba(248,113,113,0.15);
+}
+.prod-wish svg {
+  width: 13px; height: 13px;
+  stroke: var(--txt2); fill: none; stroke-width: 1.5;
+}
+.prod-wish.wishlisted svg {
+  stroke: var(--red);
+  fill: var(--red);
+}
+
+/* Card text content */
+.prod-body    { padding: 12px 12px 14px; }
+.prod-vendor  { font-size: 10px; color: var(--teal); margin-bottom: 3px; font-weight: 500; }
+.prod-name    { font-size: 12px; color: var(--txt); margin-bottom: 6px; line-height: 1.4; font-weight: 500; }
+
+/* Star ratings row */
+.prod-stars { display: flex; align-items: center; gap: 4px; margin-bottom: 7px; }
+.ps         { fill: var(--amber); }
+.ps-empty   { fill: var(--bg3); stroke: var(--txt3); stroke-width: 1; }
+.prod-rev   { font-size: 10px; color: var(--txt3); }
+
+/* Price row: price + strikethrough + discount % */
+.prod-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 9px;
+  flex-wrap: wrap;
+}
+.prod-price    { font-size: 15px; font-weight: 700; color: var(--teal); }
+.prod-old      { font-size: 11px; color: var(--txt3); text-decoration: line-through; }
+.prod-discount { font-size: 10px; color: var(--green); font-weight: 600; }
+
+/* Add to cart button */
+.prod-atc {
+  width: 100%;
+  padding: 7px;
+  border-radius: 6px;
+  background: var(--teal-dim);
+  border: 1px solid var(--border2);
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.prod-atc:hover { background: var(--teal); color: #0f1117; }
+
+/* ============================================================
+   SLIDE-IN DRAWER
+   Opens from left when hamburger clicked
+   Contains nav links + filters (price, rating, delivery)
+   ============================================================ */
+
+/* Dark overlay behind drawer */
+.drawer-overlay {
+  display: none;
+  position: fixed;    /* fixed so it covers the whole screen */
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 200;
+}
+.drawer-overlay.open { display: block; }
+
+/* The drawer panel itself */
+.drawer {
+  width: 260px;
+  height: 100%;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+.drawer-logo { font-size: 17px; font-weight: 700; color: var(--teal); }
+.drawer-close {
+  width: 28px; height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; background: transparent;
+  transition: border-color 0.15s;
+}
+.drawer-close:hover { border-color: var(--border2); }
+.drawer-close svg {
+  width: 14px; height: 14px;
+  stroke: var(--txt2); fill: none; stroke-width: 2; stroke-linecap: round;
+}
+
+/* Scrollable menu list */
+.drawer-menu {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg3) transparent;
+}
+
+/* Single drawer menu item */
+.dm-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--txt2);
+  transition: all 0.15s;
+  margin-bottom: 2px;
+  text-decoration: none;
+}
+.dm-item:hover  { background: var(--bg3); color: var(--txt); }
+.dm-item.active { background: var(--teal-dim); color: var(--teal); }
+.dm-icon { font-size: 16px; width: 20px; text-align: center; }
+
+/* Horizontal rule inside drawer */
+.dm-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 8px;
+}
+
+/* Filter sections inside drawer */
+.dm-filter-section { padding: 10px 10px 6px; }
+.dm-filter-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--txt3);
+  margin-bottom: 8px;
+}
+
+/* Price range inputs inside drawer */
+.pr-row   { display: flex; gap: 6px; margin-bottom: 8px; }
+.pr-input {
+  flex: 1;
+  height: 28px;
+  padding: 0 8px;
+  font-size: 11px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--txt);
+  outline: none;
+  font-family: inherit;
+}
+.pr-input:focus { border-color: var(--teal); }
+.pr-btn {
+  padding: 0 10px;
+  height: 28px;
+  background: var(--teal);
+  color: #0f1117;
+  border: none;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Star rating rows inside drawer */
+.star-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 0;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.star-row:hover { opacity: 0.8; }
+.stars    { display: flex; gap: 2px; }
+.star     { width: 11px; height: 11px; fill: var(--amber); }
+.star-e   { width: 11px; height: 11px; fill: var(--bg3); stroke: var(--txt3); stroke-width: 1; }
+.star-lbl { font-size: 11px; color: var(--txt2); }
+
+/* User info at bottom of drawer */
+.drawer-footer {
+  padding: 14px 18px 0;
+  border-top: 1px solid var(--border);
+}
+.df-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.df-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--teal-dim);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: var(--teal);
+  flex-shrink: 0;
+}
+.df-name { font-size: 12px; color: var(--txt); font-weight: 500; }
+.df-role { font-size: 10px; color: var(--txt3); }
+.df-btn {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--txt2);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.df-btn:hover { border-color: var(--border2); color: var(--teal); }
+
+/* ============================================================
+   RESPONSIVE — Mobile adjustments for shop page
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+  /* Collapse search bar on mobile */
+  .nav-search { max-width: 100%; }
+  .search-cat { display: none; }  /* hide category dropdown on small screen */
+
+  /* Hide deliver-to on very small screens */
+  .nav-deliver { display: none; }
+
+  /* Cart shows icon only, no label */
+  .cart-lbl { display: none; }
+
+  /* Banner stacks vertically */
+  .hero-banner { flex-direction: column; }
+  .banner-side { flex-direction: row; }
+  .banner-small { flex: 1; }
+
+  /* Fewer columns on mobile */
+  .prod-grid {
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 10px;
+  }
+
+  /* Products area less padding */
+  .products-area { padding: 12px 14px; }
+
+  /* Navbar less padding */
+  .shop-nav { padding: 10px 14px; gap: 8px; }
+}
+
+@media (max-width: 480px) {
+  /* Two columns on phone */
+  .prod-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Even smaller banner title */
+  .banner-title { font-size: 16px; }
+  .banner-visual { font-size: 40px; }
+}
